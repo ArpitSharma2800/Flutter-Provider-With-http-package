@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider/provider/ProviderClass.dart';
-import 'package:flutter_provider/screens/homeScreen2.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+class HomeScreen2 extends StatefulWidget {
+  HomeScreen2({Key key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreen2State createState() => _HomeScreen2State();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreen2State extends State<HomeScreen2> {
   @override
   void initState() {
     //initState to perform all task before page loads...
@@ -30,37 +29,26 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Consumer<ProviderClass>(
             //Consumer widget rebuilds any widgets below it whenever notifyListeners() gets called.
             builder: (context, myModel, child) {
-              return Text(myModel.count.toString());
+              return Text("Increase Count");
             },
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.navigation),
+          child: Icon(Icons.add),
           backgroundColor: Colors.green,
           onPressed: () {
-            // Provider.of<ProviderClass>(context, listen: false).count += 1;
-
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => HomeScreen2()));
+            Provider.of<ProviderClass>(context, listen: false).count += 1;
           },
         ),
         body: Consumer<ProviderClass>(builder: (context, myModel, child) {
           //The Consumer widget rebuilds any widgets below it whenever notifyListeners() gets called.
-          return ListView.builder(
-            itemCount: myModel.post == null
-                ? 0
-                : myModel.post.length, //length according to data present
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
-                  leading: FlutterLogo(),
-                  title: Text(Provider.of<ProviderClass>(context, listen: false)
-                      .post[index]
-                      .title),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              );
-            },
+          return Center(
+            child: Text(
+              Provider.of<ProviderClass>(context, listen: false)
+                  .count
+                  .toString(),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
           );
         }),
       ),
